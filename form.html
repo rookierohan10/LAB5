@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login FORM</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="form.css">
+</head>
+
+<body>
+    <div class="maindiv">
+        <div class="logo_div">
+            <h1>GET PAID!!!</h1>
+            <h2>show off your skills now!!</h2>
+            <img src="template.png" alt="">
+        </div>
+        <div class="registration_div">
+            <div class="registeration_msg_div">
+                <h1>REGISTER NOW!!</h1>
+            </div>
+            <div class="input_divs">
+                <input type="text" placeholder="User Name" id="name" onkeyup="namechecker(),check_valid()">
+                <span></span>
+            </div>
+            <div class="input_divs">
+                <input type="text" placeholder="Contact Number" id="phone" onkeyup="numberchecker(),check_valid()">
+                <span></span>
+            </div>
+            <div class="input_divs">
+                <input type="email" placeholder="Email-id" id="mail_id" onkeyup="mailchecker(),check_valid()">
+                <span></span>
+            </div>
+            <div class="input_divs">
+                <input type="password" placeholder="New Password" id="newp" onkeyup="newpassword(),check_valid()">
+                <span></span>
+            </div>
+            <div class="input_divs">
+                <input type="password" placeholder="Re-Enter Password" id="reenter"
+                    onkeyup="reenterpassword(),check_valid()">
+                <span></span>
+            </div>
+            <div class="input_divs">
+                <button class="submit_button1" id="buttn" disabled="disabled" onclick="check_valid(),setAll()">Sign
+                    Up!!</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const spans = document.querySelectorAll("span");
+    const username = document.getElementById("name");
+    const number = document.getElementById("phone");
+    const mail_id = document.getElementById("mail_id");
+    const password_check = document.getElementById("newp");
+    const repassword_check = document.getElementById("reenter");
+    const button_v = document.getElementsByClassName("submit_button");
+    let validate1 = false;
+    let validate2 = false;
+    let validate3 = false;
+    let validate4 = false;
+    let validate5 = false;
+
+    function namechecker() {
+        const data = username.value;
+        const name_regex = /^[A-Za-z ]*$/;
+        if (name_regex.test(data) == false) {
+            validate1 = false;
+            spans[0].innerText = "No numbers and special characters allowed";
+        }
+        else if (name_regex.test(data) == true) {
+            validate1 = true;
+            spans[0].innerText = "";
+        }
+    }
+
+    function numberchecker() {
+        const phone_data = number.value;
+        const phone_regex = /^\d{10}$/;
+        if (phone_regex.test(phone_data) == false) {
+            validate2 = false;
+            spans[1].innerText = "Invalid phone number";
+        }
+        else if (phone_regex.test(phone_data) == true) {
+            validate2 = true;
+            spans[1].innerText = "";
+        }
+    }
+
+    function mailchecker() {
+        const data = mail_id.value;
+        const mail_regex2 = /@gmail.com$/;
+        const mail_regex1 = /@mca.christuniversity.in$/;
+        if (mail_regex1.test(data) == false && mail_regex2.test(data) == false) {
+            validate3 = false;
+            spans[2].innerText = "Invalid Email-id";
+        }
+        else if (mail_regex1.test(data) == true || mail_regex2.test(data) == true) {
+            validate3 = true;
+            spans[2].innerText = "";
+        }
+    }
+
+    function newpassword() {
+        const data = password_check.value;
+        const password_regex1 = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
+        if (password_regex1.test(data) == false) {
+            validate4 = false;
+            spans[3].innerText = "Invalid password";
+        }
+        else if (password_regex1.test(data) == true) {
+            validate4 = true;
+            spans[3].innerText = "";
+        }
+    }
+
+    function reenterpassword() {
+        const data = repassword_check.value;
+        if (data != password_check.value) {
+            validate5 = false;
+            spans[4].innerText = "Passwords do not match";
+        }
+        else if (data == password_check.value) {
+            validate5 = true;
+            spans[4].innerText = "";
+        }
+    }
+
+    function check_valid() {
+        if (validate1 && validate2 && validate3 && validate4 && validate5) {
+            document.getElementById("buttn").removeAttribute('disabled');
+            if (document.getElementById("buttn").classList.contains("submit_button1")) {
+                document.getElementById("buttn").classList.remove("submit_button1");
+                document.getElementById("buttn").classList.add("submit_button");
+            }
+        }
+        else {
+            document.getElementById("buttn").setAttribute('disabled', 'disabled');
+            if (document.getElementById("buttn").classList.contains("submit_button")) {
+                document.getElementById("buttn").classList.remove("submit_button");
+                document.getElementById("buttn").classList.add("submit_button1");
+            }
+        }
+    }
+
+    function setCookie(cname, cvalue, exdays) {
+        const d = new Date();
+        d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+        let expires = "expires=" + d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function setAll() {
+        const username1 = document.getElementById("name");
+        const number1 = document.getElementById("phone");
+        const mail_id1 = document.getElementById("mail_id");
+        const password_check1 = document.getElementById("newp");
+        const repassword_check1 = document.getElementById("reenter");
+
+        setCookie(username1.id,username1.value,2);
+        setCookie(number1.id,username1.value,2);
+        setCookie(mail_id1.id,username1.value,2);
+        setCookie(password_check1.id,username1.value,2);
+        setCookie(repassword_check1.id,username1.value,2);
+    }
+
+</script>
+
+</html>
